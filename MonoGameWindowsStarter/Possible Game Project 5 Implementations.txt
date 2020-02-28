@@ -1,0 +1,4 @@
+﻿Optimization Ideas:
+ - Combine Breakable Walls and Spikes into a single readable file designate which by an additional integer
+ - Build levels with Tiled
+ - Could add object layer functionality for spikes and custom properties for moveable walls
