@@ -28,7 +28,8 @@ namespace MonoGameWindowsStarter
         int current_level = 0;
         Maze current_maze;
         Maze prev_maze;
-        Dictionary<int, Maze> levels = new Dictionary<int, Maze>();
+ //       Dictionary<int, Maze> levels = new Dictionary<int, Maze>();
+        Dictionary<int, Tilemap> levels;
         Maze level1;
         Maze level2;
         Maze level3;
@@ -43,7 +44,7 @@ namespace MonoGameWindowsStarter
         enum ViewState { TRANSITION_RIGHT, IDLE};
         ViewState viewState = ViewState.IDLE;
         float translationX = 0;
-        Tilemap tilemap;
+        Tilemap curTilemap;
         Tileset tileset;
 
         public Game()
@@ -54,7 +55,8 @@ namespace MonoGameWindowsStarter
             level1 = new Maze(this);
             level2 = new Maze(this);
             level3 = new Maze(this);
-            levels = new Dictionary<int, Maze>();
+            //levels = new Dictionary<int, Maze>();
+            levels = new Dictionary<int, Tilemap>();
             gameOver = new GameOver(this);
             winner = new Winner(this);
             world = new World(this);
@@ -90,9 +92,13 @@ namespace MonoGameWindowsStarter
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player.LoadContent();
             scoreFont = Content.Load<SpriteFont>("defaultFont");
-
-            tilemap = Content.Load<Tilemap>("level1");
             tileset = Content.Load<Tileset>("MazeTilSet");
+            levels.Add(0, Content.Load<Tilemap>("level1"));
+            levels.Add(1, Content.Load<Tilemap>("level2"));
+            levels.Add(2, Content.Load<Tilemap>("level3"));
+            curTilemap = levels[0];
+            
+            
 
 
 
@@ -118,7 +124,7 @@ namespace MonoGameWindowsStarter
                 level1SpikePositions.Add(new Tuple<int, int>(Convert.ToInt32(values[0]),
                                                             Convert.ToInt32(values[1])));
             }
-            levels.Add(0, level1);
+//            levels.Add(0, level1);
 
             List<Tuple<int, int, int>> level2WallPositions = new List<Tuple<int, int, int>>();
             List<Tuple<int, int>> level2SpikePositions = new List<Tuple<int, int>>();
@@ -139,7 +145,7 @@ namespace MonoGameWindowsStarter
                 level2SpikePositions.Add(new Tuple<int, int>(Convert.ToInt32(values[0]),
                                                             Convert.ToInt32(values[1])));
             }
-            levels.Add(1, level2);
+//            levels.Add(1, level2);
 
             List<Tuple<int, int, int>> level3WallPositions = new List<Tuple<int, int, int>>();
             List<Tuple<int, int>> level3SpikePositions = new List<Tuple<int, int>>();
@@ -160,11 +166,11 @@ namespace MonoGameWindowsStarter
                 level3SpikePositions.Add(new Tuple<int, int>(Convert.ToInt32(values[0]),
                                                             Convert.ToInt32(values[1])));
             }
-            levels.Add(2, level3);
+//            levels.Add(2, level3);
             level1.LoadContent(level1WallPositions, level1SpikePositions, new Vector2(1, 351), new Vector2(1001, 351), new Tuple<int, int>(0, 0), Direction.EAST);
             level2.LoadContent(level2WallPositions, level2SpikePositions, new Vector2(1, 351), new Vector2(1001, 651), new Tuple<int, int>(0, 1), Direction.EAST);
             level3.LoadContent(level3WallPositions, level3SpikePositions, new Vector2(1, 651), new Vector2(1001, 201), new Tuple<int, int>(0, 2), Direction.EAST);
-            world.LoadContent(levels);
+//            world.LoadContent(levels);
             gameOver.LoadContent();
             winner.LoadContent();
             // TODO: use this.Content to load your game content here
@@ -220,7 +226,8 @@ namespace MonoGameWindowsStarter
                         return;
                     }
 
-                    current_maze = levels[current_level];
+//                    current_maze = levels[current_level];
+                    curTilemap = levels[current_level];
 
                     // TODO: Add your update logic here
                     updateable.Add(player);

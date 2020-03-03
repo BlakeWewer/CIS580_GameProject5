@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using PlatformLibrary;
 
 namespace MonoGameWindowsStarter
 {
@@ -35,6 +36,7 @@ namespace MonoGameWindowsStarter
                 world[maze.worldPosition.Item1][maze.worldPosition.Item2] = maze;
             }
         }
+
 
         public void Update(GameTime gameTime)
         {
