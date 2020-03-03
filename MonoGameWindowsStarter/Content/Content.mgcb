@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\PlatformerContentExtension\bin\Debug\PlatformerContentExtension.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -79,6 +80,26 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:game_over.png
+
+#begin Level1.tmx
+/importer:TilemapImporter
+/processor:TilemapProcessor
+/build:Level1.tmx
+
+#begin Level2.tmx
+/importer:TilemapImporter
+/processor:TilemapProcessor
+/build:Level2.tmx
+
+#begin Level3.tmx
+/importer:TilemapImporter
+/processor:TilemapProcessor
+/build:Level3.tmx
+
+#begin MazeTilSet.tsx
+/importer:TilesetImporter
+/processor:TilesetProcessor
+/build:MazeTilSet.tsx
 
 #begin ouch.wav
 /importer:WavImporter

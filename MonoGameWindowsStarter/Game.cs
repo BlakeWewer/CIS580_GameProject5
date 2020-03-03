@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using static MonoGameWindowsStarter.Player;
 using static MonoGameWindowsStarter.Exit;
+using PlatformLibrary;
 
 namespace MonoGameWindowsStarter
 {
@@ -42,6 +43,8 @@ namespace MonoGameWindowsStarter
         enum ViewState { TRANSITION_RIGHT, IDLE};
         ViewState viewState = ViewState.IDLE;
         float translationX = 0;
+        Tilemap tilemap;
+        Tileset tileset;
 
         public Game()
         {
@@ -82,15 +85,21 @@ namespace MonoGameWindowsStarter
         /// all of your content.
         /// </summary>
         protected override void LoadContent()
-        {
+        { 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player.LoadContent();
             scoreFont = Content.Load<SpriteFont>("defaultFont");
 
+            tilemap = Content.Load<Tilemap>("level1");
+            tileset = Content.Load<Tileset>("MazeTilSet");
+
+
+
+
+
             List<Tuple<int, int, int>> level1WallPositions = new List<Tuple<int, int, int>>();
             List<Tuple<int, int>> level1SpikePositions = new List<Tuple<int, int>>();
-            //StreamReader wallReader1 = new StreamReader("../../../../../Level1WallPlacements.txt");
             string rawWall1 = Properties.Resources.Level1WallPlacements;
             string rawSpike1 = Properties.Resources.Level1SpikePlacements;
             string[] values;
@@ -430,7 +439,8 @@ namespace MonoGameWindowsStarter
                     }
                     else
                     {
-                        current_maze.Draw(spriteBatch);
+                        //current_maze.Draw(spriteBatch);
+                        tilemap.Draw(spriteBatch);
 
                         // render the score in the top left of the screen
                         spriteBatch.DrawString(scoreFont, $"Score: {score}", Vector2.Zero, Color.Black);
