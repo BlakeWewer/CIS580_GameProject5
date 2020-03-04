@@ -28,8 +28,8 @@ namespace MonoGameWindowsStarter
         int current_level = 0;
         Maze current_maze;
         Maze prev_maze;
- //       Dictionary<int, Maze> levels = new Dictionary<int, Maze>();
-        Dictionary<int, Tilemap> levels;
+        Dictionary<int, Maze> levels = new Dictionary<int, Maze>();
+        Dictionary<int, Tilemap> tileLevels;
         Maze level1;
         Maze level2;
         Maze level3;
@@ -55,8 +55,8 @@ namespace MonoGameWindowsStarter
             level1 = new Maze(this);
             level2 = new Maze(this);
             level3 = new Maze(this);
-            //levels = new Dictionary<int, Maze>();
-            levels = new Dictionary<int, Tilemap>();
+            levels = new Dictionary<int, Maze>();
+            tileLevels = new Dictionary<int, Tilemap>();
             gameOver = new GameOver(this);
             winner = new Winner(this);
             world = new World(this);
@@ -93,84 +93,82 @@ namespace MonoGameWindowsStarter
             player.LoadContent();
             scoreFont = Content.Load<SpriteFont>("defaultFont");
             tileset = Content.Load<Tileset>("MazeTilSet");
-            levels.Add(0, Content.Load<Tilemap>("level1"));
-            levels.Add(1, Content.Load<Tilemap>("level2"));
-            levels.Add(2, Content.Load<Tilemap>("level3"));
-            curTilemap = levels[0];
-            
-            
+            tileLevels.Add(0, Content.Load<Tilemap>("level1"));
+            tileLevels.Add(1, Content.Load<Tilemap>("level2"));
+            tileLevels.Add(2, Content.Load<Tilemap>("level3"));
+            curTilemap = tileLevels[0];
 
 
 
 
 
-            List<Tuple<int, int, int>> level1WallPositions = new List<Tuple<int, int, int>>();
-            List<Tuple<int, int>> level1SpikePositions = new List<Tuple<int, int>>();
-            string rawWall1 = Properties.Resources.Level1WallPlacements;
-            string rawSpike1 = Properties.Resources.Level1SpikePlacements;
-            string[] values;
-            string[] line = rawWall1.Split('\n');
-            foreach (string pair in line)
-            {
-                values = pair.Split(' ');
-                level1WallPositions.Add(new Tuple<int, int, int>(Convert.ToInt32(values[0]),
-                                                            Convert.ToInt32(values[1]),
-                                                            Convert.ToInt32(values[2])));
-            }
-            line = rawSpike1.Split('\n');
-            foreach (string pair in line)
-            {
-                values = pair.Split(' ');
-                level1SpikePositions.Add(new Tuple<int, int>(Convert.ToInt32(values[0]),
-                                                            Convert.ToInt32(values[1])));
-            }
-//            levels.Add(0, level1);
+            //List<Tuple<int, int, int>> level1WallPositions = new List<Tuple<int, int, int>>();
+            //List<Tuple<int, int>> level1SpikePositions = new List<Tuple<int, int>>();
+            //string rawWall1 = Properties.Resources.Level1WallPlacements;
+            //string rawSpike1 = Properties.Resources.Level1SpikePlacements;
+            //string[] values;
+            //string[] line = rawWall1.Split('\n');
+            //foreach (string pair in line)
+            //{
+            //    values = pair.Split(' ');
+            //    level1WallPositions.Add(new Tuple<int, int, int>(Convert.ToInt32(values[0]),
+            //                                                Convert.ToInt32(values[1]),
+            //                                                Convert.ToInt32(values[2])));
+            //}
+            //line = rawSpike1.Split('\n');
+            //foreach (string pair in line)
+            //{
+            //    values = pair.Split(' ');
+            //    level1SpikePositions.Add(new Tuple<int, int>(Convert.ToInt32(values[0]),
+            //                                                Convert.ToInt32(values[1])));
+            //}
+            //levels.Add(0, level1);
 
-            List<Tuple<int, int, int>> level2WallPositions = new List<Tuple<int, int, int>>();
-            List<Tuple<int, int>> level2SpikePositions = new List<Tuple<int, int>>();
-            string rawWall2 = Properties.Resources.Level2WallPlacements;
-            string rawSpike2 = Properties.Resources.Level2SpikePlacements;
-            line = rawWall2.Split('\n');
-            foreach (string pair in line)
-            {
-                values = pair.Split(' ');
-                level2WallPositions.Add(new Tuple<int, int, int>(Convert.ToInt32(values[0]),
-                                                            Convert.ToInt32(values[1]),
-                                                            Convert.ToInt32(values[2])));
-            }
-            line = rawSpike2.Split('\n');
-            foreach (string pair in line)
-            {
-                values = pair.Split(' ');
-                level2SpikePositions.Add(new Tuple<int, int>(Convert.ToInt32(values[0]),
-                                                            Convert.ToInt32(values[1])));
-            }
-//            levels.Add(1, level2);
+            //List<Tuple<int, int, int>> level2WallPositions = new List<Tuple<int, int, int>>();
+            //List<Tuple<int, int>> level2SpikePositions = new List<Tuple<int, int>>();
+            //string rawWall2 = Properties.Resources.Level2WallPlacements;
+            //string rawSpike2 = Properties.Resources.Level2SpikePlacements;
+            //line = rawWall2.Split('\n');
+            //foreach (string pair in line)
+            //{
+            //    values = pair.Split(' ');
+            //    level2WallPositions.Add(new Tuple<int, int, int>(Convert.ToInt32(values[0]),
+            //                                                Convert.ToInt32(values[1]),
+            //                                                Convert.ToInt32(values[2])));
+            //}
+            //line = rawSpike2.Split('\n');
+            //foreach (string pair in line)
+            //{
+            //    values = pair.Split(' ');
+            //    level2SpikePositions.Add(new Tuple<int, int>(Convert.ToInt32(values[0]),
+            //                                                Convert.ToInt32(values[1])));
+            //}
+            //levels.Add(1, level2);
 
-            List<Tuple<int, int, int>> level3WallPositions = new List<Tuple<int, int, int>>();
-            List<Tuple<int, int>> level3SpikePositions = new List<Tuple<int, int>>();
-            string rawWall3 = Properties.Resources.Level3WallPlacements;
-            string rawSpike3 = Properties.Resources.Level3SpikePlacements;
-            line = rawWall3.Split('\n');
-            foreach (string pair in line)
-            {
-                values = pair.Split(' ');
-                level3WallPositions.Add(new Tuple<int, int, int>(Convert.ToInt32(values[0]),
-                                                            Convert.ToInt32(values[1]),
-                                                            Convert.ToInt32(values[2])));
-            }
-            line = rawSpike3.Split('\n');
-            foreach (string pair in line)
-            {
-                values = pair.Split(' ');
-                level3SpikePositions.Add(new Tuple<int, int>(Convert.ToInt32(values[0]),
-                                                            Convert.ToInt32(values[1])));
-            }
-//            levels.Add(2, level3);
-            level1.LoadContent(level1WallPositions, level1SpikePositions, new Vector2(1, 351), new Vector2(1001, 351), new Tuple<int, int>(0, 0), Direction.EAST);
-            level2.LoadContent(level2WallPositions, level2SpikePositions, new Vector2(1, 351), new Vector2(1001, 651), new Tuple<int, int>(0, 1), Direction.EAST);
-            level3.LoadContent(level3WallPositions, level3SpikePositions, new Vector2(1, 651), new Vector2(1001, 201), new Tuple<int, int>(0, 2), Direction.EAST);
-//            world.LoadContent(levels);
+            //List<Tuple<int, int, int>> level3WallPositions = new List<Tuple<int, int, int>>();
+            //List<Tuple<int, int>> level3SpikePositions = new List<Tuple<int, int>>();
+            //string rawWall3 = Properties.Resources.Level3WallPlacements;
+            //string rawSpike3 = Properties.Resources.Level3SpikePlacements;
+            //line = rawWall3.Split('\n');
+            //foreach (string pair in line)
+            //{
+            //    values = pair.Split(' ');
+            //    level3WallPositions.Add(new Tuple<int, int, int>(Convert.ToInt32(values[0]),
+            //                                                Convert.ToInt32(values[1]),
+            //                                                Convert.ToInt32(values[2])));
+            //}
+            //line = rawSpike3.Split('\n');
+            //foreach (string pair in line)
+            //{
+            //    values = pair.Split(' ');
+            //    level3SpikePositions.Add(new Tuple<int, int>(Convert.ToInt32(values[0]),
+            //                                                Convert.ToInt32(values[1])));
+            //}
+            //levels.Add(2, level3);
+            //level1.LoadContent(level1WallPositions, level1SpikePositions, new Vector2(1, 351), new Vector2(1001, 351), new Tuple<int, int>(0, 0), Direction.EAST);
+            //level2.LoadContent(level2WallPositions, level2SpikePositions, new Vector2(1, 351), new Vector2(1001, 651), new Tuple<int, int>(0, 1), Direction.EAST);
+            //level3.LoadContent(level3WallPositions, level3SpikePositions, new Vector2(1, 651), new Vector2(1001, 201), new Tuple<int, int>(0, 2), Direction.EAST);
+            //world.LoadContent(levels);
             gameOver.LoadContent();
             winner.LoadContent();
             // TODO: use this.Content to load your game content here
@@ -199,16 +197,16 @@ namespace MonoGameWindowsStarter
 
             if(viewState == ViewState.IDLE)
             {
-                oldkeyboardState = keyboardState;
-                keyboardState = Keyboard.GetState();
-                if (keyboardState.IsKeyDown(Keys.P) && !oldkeyboardState.IsKeyDown(Keys.P))
-                {
-                    NextLevel();
-                }
-                if (keyboardState.IsKeyDown(Keys.Q) && !oldkeyboardState.IsKeyDown(Keys.Q))
-                {
-                    PreviousLevel();
-                }
+                //oldkeyboardState = keyboardState;
+                //keyboardState = Keyboard.GetState();
+                //if (keyboardState.IsKeyDown(Keys.P) && !oldkeyboardState.IsKeyDown(Keys.P))
+                //{
+                //    NextLevel();
+                //}
+                //if (keyboardState.IsKeyDown(Keys.Q) && !oldkeyboardState.IsKeyDown(Keys.Q))
+                //{
+                //    PreviousLevel();
+                //}
                 if (keyboardState.IsKeyDown(Keys.E) && !oldkeyboardState.IsKeyDown(Keys.E))
                 {
                     player.curPosition = current_maze.endingPosition;
@@ -227,7 +225,7 @@ namespace MonoGameWindowsStarter
                     }
 
 //                    current_maze = levels[current_level];
-                    curTilemap = levels[current_level];
+                    curTilemap = tileLevels[current_level];
 
                     // TODO: Add your update logic here
                     updateable.Add(player);
@@ -300,7 +298,7 @@ namespace MonoGameWindowsStarter
                             {
                                 if (player.Bounds.CollidesWith(exit.Bounds))
                                 {
-                                    NextLevelExit();    // Change to Transition Slide
+                                    //NextLevelExit();    // Change to Transition Slide
                                     return;
                                 }
                             }
@@ -354,7 +352,13 @@ namespace MonoGameWindowsStarter
             sum_score_prev_levels += score;
             score = 10000;
             current_level++;
-            if (levels.TryGetValue(current_level, out current_maze))
+            //if (levels.TryGetValue(current_level, out current_maze))
+            //{
+            //    player.curPosition = current_maze.startingPosition;
+            //    player.Bounds.X = player.curPosition.X;
+            //    player.Bounds.Y = player.curPosition.Y;
+            //}
+            if (tileLevels.TryGetValue(current_level, out curTilemap))
             {
                 player.curPosition = current_maze.startingPosition;
                 player.Bounds.X = player.curPosition.X;
@@ -367,44 +371,44 @@ namespace MonoGameWindowsStarter
             }
         }
 
-        public void NextLevelExit()
-        {
-            sum_score_prev_levels += score;
-            score = 10000;
-            prev_maze = current_maze;
-            current_level++;
+        //public void NextLevelExit()
+        //{
+        //    sum_score_prev_levels += score;
+        //    score = 10000;
+        //    prev_maze = current_maze;
+        //    current_level++;
             
-            if (levels.TryGetValue(current_level, out current_maze))
-            {
-                player.curPosition = current_maze.startingPosition;
-                player.Bounds.X = player.curPosition.X;
-                player.Bounds.Y = player.curPosition.Y;
-                viewState = ViewState.TRANSITION_RIGHT;
-            }
-            else
-            {
-                win = true;
-                winner_score = sum_score_prev_levels;
-            }
+        //    if (levels.TryGetValue(current_level, out current_maze))
+        //    {
+        //        player.curPosition = current_maze.startingPosition;
+        //        player.Bounds.X = player.curPosition.X;
+        //        player.Bounds.Y = player.curPosition.Y;
+        //        viewState = ViewState.TRANSITION_RIGHT;
+        //    }
+        //    else
+        //    {
+        //        win = true;
+        //        winner_score = sum_score_prev_levels;
+        //    }
             
-        }
+        //}
 
-        public void PreviousLevel()
-        {
-            sum_score_prev_levels -= score;
-            score = 10000;
-            current_level--;
-            if (levels.TryGetValue(current_level, out current_maze))
-            {
-                player.curPosition = current_maze.startingPosition;
-            }
-            else
-            {
-                current_level = 0;
-                current_maze = levels[current_level];
-                player.curPosition = current_maze.startingPosition;
-            }
-        }
+        //public void PreviousLevel()
+        //{
+        //    sum_score_prev_levels -= score;
+        //    score = 10000;
+        //    current_level--;
+        //    if (levels.TryGetValue(current_level, out current_maze))
+        //    {
+        //        player.curPosition = current_maze.startingPosition;
+        //    }
+        //    else
+        //    {
+        //        current_level = 0;
+        //        current_maze = levels[current_level];
+        //        player.curPosition = current_maze.startingPosition;
+        //    }
+        //}
 
         public void GameOverDeath()
         {
@@ -424,59 +428,54 @@ namespace MonoGameWindowsStarter
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
-            
-            switch(viewState)
-            {
-                case ViewState.IDLE:
-                    spriteBatch.Begin();
-                    if (win)
-                    {
-                        winner.Draw(spriteBatch);
-                        Vector2 messageCentered = scoreFont.MeasureString("Thanks For Playing!") / 2;
-                        spriteBatch.DrawString(scoreFont, "Thanks For Playing!", new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - messageCentered.X, (graphics.GraphicsDevice.Viewport.Height / 2)), Color.Red);
-                        Vector2 fontCentered = scoreFont.MeasureString("Score: " + winner_score.ToString()) / 2;
-                        spriteBatch.DrawString(scoreFont, "Score: " + winner_score.ToString(), new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - fontCentered.X, (graphics.GraphicsDevice.Viewport.Height / 2) + 100), Color.Black);
-                    }
-                    else if (game_over)
-                    {
-                        gameOver.Draw(spriteBatch);
+            curTilemap.Draw(spriteBatch);
+            //switch(viewState)
+            //{
+            //    case ViewState.IDLE:
+            //        spriteBatch.Begin();
+            //        if (win)
+            //        {
+            //            winner.Draw(spriteBatch);
+            //            Vector2 messageCentered = scoreFont.MeasureString("Thanks For Playing!") / 2;
+            //            spriteBatch.DrawString(scoreFont, "Thanks For Playing!", new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - messageCentered.X, (graphics.GraphicsDevice.Viewport.Height / 2)), Color.Red);
+            //            Vector2 fontCentered = scoreFont.MeasureString("Score: " + winner_score.ToString()) / 2;
+            //            spriteBatch.DrawString(scoreFont, "Score: " + winner_score.ToString(), new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - fontCentered.X, (graphics.GraphicsDevice.Viewport.Height / 2) + 100), Color.Black);
+            //        }
+            //        else if (game_over)
+            //        {
+            //            gameOver.Draw(spriteBatch);
 
-                        Vector2 fontCentered = scoreFont.MeasureString("Score: " + game_over_score.ToString()) / 2;
-                        spriteBatch.DrawString(scoreFont, "Score: " + game_over_score.ToString(), new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - fontCentered.X, (graphics.GraphicsDevice.Viewport.Height / 2) + 100), Color.Black);
-                    }
-                    else
-                    {
-                        //current_maze.Draw(spriteBatch);
-                        tilemap.Draw(spriteBatch);
+            //            Vector2 fontCentered = scoreFont.MeasureString("Score: " + game_over_score.ToString()) / 2;
+            //            spriteBatch.DrawString(scoreFont, "Score: " + game_over_score.ToString(), new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - fontCentered.X, (graphics.GraphicsDevice.Viewport.Height / 2) + 100), Color.Black);
+            //        }
+            //        else
+            //        {
+            //            current_maze.Draw(spriteBatch);
+            //            curTilemap.Draw(spriteBatch);
 
-                        // render the score in the top left of the screen
-                        spriteBatch.DrawString(scoreFont, $"Score: {score}", Vector2.Zero, Color.Black);
-                        player.Draw(spriteBatch);
-                    }
-                    spriteBatch.End();
-                    break;
-                case ViewState.TRANSITION_RIGHT:
-                    DrawTransitionOld(prev_maze, translationX);
-                    DrawTransitionNew(current_maze, translationX);
-                    Debug.WriteLine($"{-translationX} , {graphics.GraphicsDevice.Viewport.Width - translationX}");
+            //            // render the score in the top left of the screen
+            //            spriteBatch.DrawString(scoreFont, $"Score: {score}", Vector2.Zero, Color.Black);
+            //            player.Draw(spriteBatch);
+            //        }
+            //        spriteBatch.End();
+            //        break;
+            //    case ViewState.TRANSITION_RIGHT:
+            //        DrawTransitionOld(prev_maze, translationX);
+            //        DrawTransitionNew(current_maze, translationX);
+            //        Debug.WriteLine($"{-translationX} , {graphics.GraphicsDevice.Viewport.Width - translationX}");
 
-                    //float timer = 0F;
-                    //while(timer < 1000000)
-                    //{
-                    //    timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    //}
-                    if (translationX == graphics.GraphicsDevice.Viewport.Width - 1)
-                    { 
-                        Debug.WriteLine("One More");
-                    }
-                    translationX++;
-                    if(translationX >= graphics.GraphicsDevice.Viewport.Width)
-                    {
-                        viewState = ViewState.IDLE;
-                        translationX = 0;
-                    }
-                    break;
-            }
+            //        if (translationX == graphics.GraphicsDevice.Viewport.Width - 1)
+            //        { 
+            //            Debug.WriteLine("One More");
+            //        }
+            //        translationX++;
+            //        if(translationX >= graphics.GraphicsDevice.Viewport.Width)
+            //        {
+            //            viewState = ViewState.IDLE;
+            //            translationX = 0;
+            //        }
+            //        break;
+            //}
             base.Draw(gameTime);
         }
 
@@ -489,6 +488,23 @@ namespace MonoGameWindowsStarter
         }
 
         void DrawTransitionNew(Maze maze, float translationX)
+        {
+            Matrix t = Matrix.CreateTranslation(graphics.GraphicsDevice.Viewport.Width - translationX, 0, 0);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, t);
+            maze.Draw(spriteBatch);
+            player.Draw(spriteBatch);
+            spriteBatch.End();
+        }
+
+        void DrawTransitionOld(Tilemap maze, float translationX)
+        {
+            Matrix t = Matrix.CreateTranslation(-translationX, 0, 0);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, t);
+            maze.Draw(spriteBatch);
+            spriteBatch.End();
+        }
+
+        void DrawTransitionNew(Tilemap maze, float translationX)
         {
             Matrix t = Matrix.CreateTranslation(graphics.GraphicsDevice.Viewport.Width - translationX, 0, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, t);
